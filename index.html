@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Live Cricket Score</title>
 
 <style>
-
 body{
 font-family:Arial;
 text-align:center;
@@ -24,7 +22,6 @@ padding:20px;
 margin:20px;
 border-radius:10px;
 }
-
 </style>
 
 </head>
@@ -34,41 +31,42 @@ border-radius:10px;
 <h1>🏏 Live Cricket Score</h1>
 
 <div class="box">
-
 <h2 id="match">Loading match...</h2>
-
 <p id="score"></p>
-
 <p id="status"></p>
-
 </div>
 
 <script>
 
 fetch("https://api.cricapi.com/v1/currentMatches?apikey=b987e6fd-cd52-422e&offset=0")
-
-.then(response => response.json())
-
+.then(res => res.json())
 .then(data => {
+
+if(data.data && data.data.length>0){
 
 let match = data.data[0];
 
-document.getElementById("match").innerHTML =
-match.name;
+document.getElementById("match").innerHTML = match.name;
 
+if(match.score){
 document.getElementById("score").innerHTML =
-JSON.stringify(match.score);
+match.score[0].r + "/" + match.score[0].w + " (" + match.score[0].o + " overs)";
+}
 
-document.getElementById("status").innerHTML =
-match.status;
+document.getElementById("status").innerHTML = match.status;
 
+}else{
+
+document.getElementById("match").innerHTML = "No Live Match";
+
+}
+
+})
+
+.catch(error => {
+document.getElementById("match").innerHTML="API Error";
+console.log(error);
 });
-
-setInterval(function(){
-
-location.reload();
-
-},30000);
 
 </script>
 
