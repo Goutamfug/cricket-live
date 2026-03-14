@@ -13,8 +13,13 @@ background:#0b1d36;
 color:white;
 }
 
-.box{
+h1{
 background:#142850;
+padding:15px;
+}
+
+.box{
+background:#1b2a49;
 padding:20px;
 margin:20px;
 border-radius:10px;
@@ -30,27 +35,40 @@ border-radius:10px;
 
 <div class="box">
 
-<h2 id="match"></h2>
+<h2 id="match">Loading match...</h2>
 
 <p id="score"></p>
+
+<p id="status"></p>
 
 </div>
 
 <script>
 
-fetch("https://api.cricapi.com/v1/currentMatches?b987e6fd-cd52-422e_API_KEY&offset=0")
+fetch("https://api.cricapi.com/v1/currentMatches?apikey=b987e6fd-cd52-422e&offset=0")
 
 .then(response => response.json())
 
 .then(data => {
 
+let match = data.data[0];
+
 document.getElementById("match").innerHTML =
-data.data[0].name;
+match.name;
 
 document.getElementById("score").innerHTML =
-JSON.stringify(data.data[0].score);
+JSON.stringify(match.score);
+
+document.getElementById("status").innerHTML =
+match.status;
 
 });
+
+setInterval(function(){
+
+location.reload();
+
+},30000);
 
 </script>
 
