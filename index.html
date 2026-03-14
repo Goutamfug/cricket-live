@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Live Cricket Score</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:#0b1d36;
+color:white;
+}
+
+.box{
+background:#142850;
+padding:20px;
+margin:20px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🏏 Live Cricket Score</h1>
+
+<div class="box">
+
+<h2 id="match"></h2>
+
+<p id="score"></p>
+
+</div>
+
+<script>
+
+fetch("https://api.cricapi.com/v1/currentMatches?apikey=YOUR_API_KEY&offset=0")
+
+.then(response => response.json())
+
+.then(data => {
+
+document.getElementById("match").innerHTML =
+data.data[0].name;
+
+document.getElementById("score").innerHTML =
+JSON.stringify(data.data[0].score);
+
+});
+
+</script>
+
+</body>
+</html>
